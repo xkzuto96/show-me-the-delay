@@ -1,0 +1,14 @@
+{
+	"required": true,
+	"package": "xkzuto.smth.client.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"DelayInteractionMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	},
+	"overwrites": {
+		"requireAnnotations": true
+	}
+}

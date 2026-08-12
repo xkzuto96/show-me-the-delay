@@ -1,0 +1,38 @@
+{
+	"schemaVersion": 1,
+	"id": "show-me-the-delay",
+	"version": "${version}",
+	"name": "show me the delay",
+	"description": "A client-side mod that displays a highly customizable HUD overlay showing the delay (in milliseconds) of your actions like placing blocks or attacking. Useful for checking your real ping and responsiveness.",
+	"authors": [
+		"xkzuto"
+	],
+	"contact": {
+		"homepage": "https://github.com/xkzuto96",
+		"sources": "https://github.com/xkzuto96/show-me-the-delay"
+	},
+	"license": "MIT",
+	"icon": "assets/show-me-the-delay/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"xkzuto.smth.ShowMeTheDelay"
+		],
+		"client": [
+			"xkzuto.smth.delay.DelayClientInit"
+		]
+	},
+	"mixins": [
+		"show-me-the-delay.mixins.json",
+		{
+			"config": "show-me-the-delay.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.19.3",
+		"minecraft": "~1.21.11",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}
