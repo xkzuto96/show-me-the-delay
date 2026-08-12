@@ -13,7 +13,10 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import org.lwjgl.glfw.GLFW;
-
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.util.InputUtil;
+import net.minecraft.util.Identifier;
 import xkzuto.smth.delay.core.DelayTracker;
 import xkzuto.smth.delay.core.DelayConfig;
 import xkzuto.smth.delay.render.DelayHudRenderer;
@@ -21,7 +24,7 @@ import xkzuto.smth.delay.gui.DelayConfigScreen;
 
 public class DelayClientInit implements ClientModInitializer {
 
-    private static boolean wasOPressed = false;
+    private static KeyBinding configKeyBinding;
 
     @Override
     public void onInitializeClient() {
@@ -37,15 +40,18 @@ public class DelayClientInit implements ClientModInitializer {
                 }));
         });
 
+        configKeyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+                "key.show-me-the-delay.open_config",
+                InputUtil.Type.KEYSYM,
+                GLFW.GLFW_KEY_O,
+                KeyBinding.Category.create(Identifier.of("show-me-the-delay", "category"))
+        ));
+
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            if (client.getWindow() != null) {
-                boolean isOPressed = GLFW.glfwGetKey(client.getWindow().getHandle(), GLFW.GLFW_KEY_O) == GLFW.GLFW_PRESS;
-                if (isOPressed && !wasOPressed) {
-                    if (client.currentScreen == null) {
-                        client.setScreen(new DelayConfigScreen());
-                    }
+            while (configKeyBinding.wasPressed()) {
+                if (client.currentScreen == null) {
+                    client.setScreen(new DelayConfigScreen());
                 }
-                wasOPressed = isOPressed;
             }
             
             if (client.player != null) {
